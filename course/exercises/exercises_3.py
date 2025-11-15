@@ -72,5 +72,5 @@ def stacked_bar_counts(df, cat_var_1, cat_var_2, labels):
     return a bar chart as a plotly express object
     which summarises the mean of the continuous variable by different levels
     of cat_var and labels the axes using the labels dict."""
-    fig = px.bar(df,x=cat_var_1, y=cat_var_2, barmode="stack", labels=labels)
+    fig = px.bar(df,x=cat_var_1, color=cat_var_2, barmode="stack", labels=labels)
     return fig
