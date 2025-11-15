@@ -9,7 +9,8 @@ def box_plot(df, cat_var, cont_var):
     return a box plot as a plotly express object
     which summarises the distribution of the continuous variable for
     different levels of cat_var."""
-    return 0
+    fig = px.box(df, x=cat_var, y=cont_var)
+    return fig
 
 
 def scatterplot(df, xvar, yvar):
@@ -19,7 +20,8 @@ def scatterplot(df, xvar, yvar):
       - a string 'yvar' denoting a continuous variable
     return a scatterplot plot as a plotly express object
     of the x variable against the y variable."""
-    return 0
+    fig = px.scatter(df, x=xvar, y=yvar)
+    return fig
 
 
 def scatterplot_groups(df, xvar, yvar, groups):
@@ -31,7 +33,8 @@ def scatterplot_groups(df, xvar, yvar, groups):
     return a scatterplot plot as a plotly express object
     of the x variable against the y variable that has
     markers colours for different levels of the grouping variable."""
-    return 0
+    fig = px.scatter(df, x=xvar, y=yvar, color=groups)
+    return fig
 
 
 def scatterplot_matrix(df, numeric_cols):
@@ -40,7 +43,8 @@ def scatterplot_matrix(df, numeric_cols):
       - a list 'numeric_cols' denoting several of the continuous variables
     return a scatterplot plotmatrix as a plotly express object
     plotting each continuous variable against the others."""
-    return 0
+    fig = px.scatter_matrix(df, dimensions=numeric_cols)
+    return fig
 
 
 def bar_chart_means(df, cat_var, continuous_var, labels):
@@ -53,7 +57,9 @@ def bar_chart_means(df, cat_var, continuous_var, labels):
     return a bar chart as a plotly express object
     which summarises the mean of the continuous variable by different levels
     of cat_var and labels the axes using the labels dict."""
-    return 0
+    fig = px.bar(df.groupby(cat_var)[continuous_var].mean().reset_index(), 
+    x=cat_var, y=continuous_var, labels=labels, title=f"Average {continuous_var} by {cat_var}")
+    return fig
 
 
 def stacked_bar_counts(df, cat_var_1, cat_var_2, labels):
@@ -66,4 +72,5 @@ def stacked_bar_counts(df, cat_var_1, cat_var_2, labels):
     return a bar chart as a plotly express object
     which summarises the mean of the continuous variable by different levels
     of cat_var and labels the axes using the labels dict."""
-    return 0
+    fig = px.bar(df,x=cat_var_1, y=cat_var_2, barmode="stack", labels=labels)
+    return fig
