@@ -8,7 +8,7 @@ def select_row(df, x):
     """Given a data frame 'df' and an integer 'x'
     return the xth row of the DataFrame."""
     return df.iloc[x, :]
-  
+
 
 def frequencies_by_group(df, cat_col):
     """Given a dataframe 'df' and the name of a categorical

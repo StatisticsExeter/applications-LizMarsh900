@@ -8,7 +8,8 @@ import plotly.express as px
 def plot_scatter(df, x_name, y_name):
     """Given a dataframe containing numeric columns specified by x_name and y_name
     return a plotly express scatterplot"""
-    return 0
+    fig = px.scatter(df, x=x_name, y=y_name)
+    return fig
 
 
 def calculate_correlation(df, x1, x2):

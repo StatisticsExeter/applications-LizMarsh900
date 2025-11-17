@@ -13,24 +13,24 @@ def has_key(d, key):
     return key in d
 
 
-def round_float(f): 
+def round_float(f):
     """Round the float 'f' to 2 decimal places."""
     return round(f, 2)
 
 
-def reverse_list(lst): 
+def reverse_list(lst):
     """Return a new list that is the reverse of 'lst'."""
     return lst[::-1]
 
- 
+
 def count_occurrences(lst, item):
     """For a list of items 'lst', count how many times element 'item' occurs."""
-    return lst.count(item) 
+    return lst.count(item)
 
 
 def tuples_to_dict(pairs):
     """Convert a list of (key, value) tuples 'pairs' into a dictionary."""
-    return dict(pairs) 
+    return dict(pairs)
 
 
 def string_length(s):
@@ -43,6 +43,6 @@ def unique_elements(lst):
     return set(lst)
 
 
-def swap_dict(d): 
+def swap_dict(d):
     """Return a new dictionary with keys and values of 'd' swapped."""
     return {v: k for k, v in d.items()}
