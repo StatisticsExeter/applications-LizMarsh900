@@ -14,22 +14,24 @@ def plot_scatter(df, x_name, y_name):
 
 def calculate_correlation(df, x1, x2):
     """Given a dataframe containing numeric columns specified by x_name and y_name
-    return two objects (numbers), the first is the pearson correlation coefficient, the second 
+    return two objects (numbers), the first is the pearson correlation coefficient, the second
     the significance of this estimate"""
-    return 0
+    r, p_value = pearsonr(df[x1], df[x2])
+    return r, p_value
 
 
 def fit_regression(df, x_name, y_name):
     """Given a dataframe containing numeric columns specified by x_name and y_name
     return the stats models OLS fit of a regression model of y on x"""
-    return 0
+    mod = sm.OLS(df[y_name], df[x_name]).fit()
+    return mod
 
 
 def filter_data(df, year):
     """Given a dataframe of various rows including a column 'Year' and an integer year
     return a dataframe containing only those rows where the value in this column is less
     than the value of the supplied year"""
-    return 0
+    return df[df["Year"] < year]
 
 
 def tyler_viglen():
