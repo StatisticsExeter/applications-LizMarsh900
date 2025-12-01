@@ -37,12 +37,14 @@ def hierarchical_groups(height):
 def _fit_dendrogram(df):
     """Given a dataframe containing only suitable values
     Return a scipy.cluster.hierarchy hierarchical clustering solution to these data"""
-    return 0
+    solution = linkage(df)
+    return solution
 
 
 def _plot_dendrogram(df):
     """Given a dataframe df containing only suitable variables
     Use plotly.figure_factory to plot a dendrogram of these data"""
+    fig = ff.create_dendrogram(df.value)
     return 0
 
 
@@ -50,13 +52,15 @@ def _cutree(tree, height):
     """Given a scipy.cluster.hierarchy hierarchical clustering solution and a float of the height
     Cut the tree at that hight and return the solution (cluster group membership) as a
     data frame with one column called 'cluster'"""
-    return 0
+    clusters = fcluster(tree, t=height, criterion='distance')
+    return pd.DataFrame({'cluster': clusters})
 
 
 def _pca(df):
     """Given a dataframe of only suitable variables
     return a dataframe of the first two pca predictions (z values) with columns 'PC1' and 'PC2'"""
-    return 0
+    pca = PCA(n_components=2).fit(df)
+    return pd.DataFrame(pca.transform(df))
 
 
 def _scatter_clusters(df):
@@ -64,4 +68,6 @@ def _scatter_clusters(df):
       (the first two principal component projections and the cluster groups)
     return a plotly express scatterplot of PC1 versus PC2
     with marks to denote cluster group membership"""
-    return 0
+    fig = px.scatter(df, x='PC1', y='PC2', color='cluster', 
+    title='PCA Scatterplot with Cluster Membership')
+    return fig
