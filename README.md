@@ -1,6 +1,6 @@
 # mthm503
 
-![CI](https://github.com/<YOUR USER NAME>/<YOUR REPOSITORY NAME>/actions/workflows/main.yml/badge.svg)
+![CI](https://github.com/LizMarsh900/applications-LizMarsh900/actions/workflows/main.yml/badge.svg)
 
 This is a template for course MTHM503 "Applications of Data Science and Statistics".  You should fork this repository and use it for your work on this module
 
