@@ -8,15 +8,15 @@ VIGNETTE_DIR = Path('data_cache') / 'vignettes' / 'regression'
 
 
 def _fit_model(df):
-    """Given data frame df containing columns 'shortfall', 'n_rooms', 'age' and 
+    """Given data frame df containing columns 'shortfall', 'n_rooms', 'age' and
     'local_authority_code'
     Fit a linear mixed model with shortfall as the response variable
     n_rooms and age as fixed predictors
     with local_authority_code as a random effect"""
-    model = smf.mixedlm("shortfall ~ n_rooms + age", data=df, 
-    groups=df["local_authority_code"])
+    model = smf.mixedlm("shortfall ~ n_rooms + age", data=df,
+                        groups=df["local_authority_code"])
     result = model.fit()
-    return (result.summary())
+    return result
 
 
 def _save_model_summary(model, outpath):
