@@ -24,5 +24,5 @@ def metric_report_qda():
     base_dir = find_project_root()
     y_test_path = base_dir / 'data_cache' / 'energy_y_test.csv'
     y_pred_path = base_dir / 'data_cache' / 'models' / 'qda_y_pred.csv'
-    report_path = base_dir / 'vignettes' / 'supervised_classification' / 'qda.csv'
+    report_path = base_dir / 'data_cache' / 'vignettes' / 'supervised_classification' / 'qda.csv'
     metric_report(y_test_path, y_pred_path, report_path)
