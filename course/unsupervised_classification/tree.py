@@ -44,7 +44,7 @@ def _fit_dendrogram(df):
 def _plot_dendrogram(df):
     """Given a dataframe df containing only suitable variables
     Use plotly.figure_factory to plot a dendrogram of these data"""
-    fig = ff.create_dendrogram(df.values)
+    fig = ff.create_dendrogram(df)
     fig.update_layout(title_text="Interactive Hierarchical Clustering Dendrogram")
     return fig
 
@@ -62,7 +62,7 @@ def _pca(df):
     return a dataframe of the first two pca predictions (z values) with columns 'PC1' and 'PC2'"""
     pca = PCA(n_components=2)
     components = pca.fit_transform(df)
-    pca_df = pd.DataFrame(components, columns=['PC1', 'PC2'], index=df.index)
+    pca_df = pd.DataFrame(components, columns=['PC1', 'PC2'], index=getattr(df, "index", None))
     return pca_df
 
 
