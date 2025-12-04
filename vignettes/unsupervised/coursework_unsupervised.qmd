@@ -51,23 +51,29 @@ Some previous cluster analysis work has been reported at:
 
 ## The Data
 
-The first thing we can do is consider a scatterplot of the data
+The following figure shows a scatterplot matrix all the numerical variables in the dataset plotted against one another, to allow us to visualise all bivariate relationships. The proportion of each subtype of collision was used, rather the actual number of collisions, and the variables were rescaled.
 
 ![](../../data_cache/vignettes/unsupervised_classification/scatterplot.html){width="100%" height="600px"}
 
-We are going to use the proportion of each subtype of collision that was reported, and rescale the variables.
+Upon visual inspection, the scatterplots do not appear to show many obvious associations between different types of collisions with a few exceptions. One such example is a negative correlation between the proportion of collisions in the rain versus dry weather, meaning that areas with a high proportion of collisions in the rain tend to have a lower proportion of dry collisions. This obviously makes sense, as collisions in wet weather cannot occur at the same time as collisions in dry weather. Another set of variables that might show a relationship is dry collisions and collisions resulting in slight injury. There appears to be a positive association between the two collision types, which could make sense logically, as dry collisions might result in less serious injuries.
 
-## Hierarchical clustering
+Finally, and importantly, the total number of collisions is highly positively correlated with many of the collision subtypes, particularly slight injuries, urban locations, and dry conditions. Obviously this again is to be expected, as the subtypes make up proportions of the total collisions. However it does suggest that these three specific collision types make up most of the proportion of overall collisions and also that total crashes accounts for most of the variation between authorities.
 
-The first task is to perform hierarchical clustering.
+## Hierarchical clustering 
+
+ADD IN DETAILS ABOUT WHAT EXACTLY HIERARCHICAL CLUSTERING DOES FOR YOU?
+
+The following dendrogram represents the hierarchical relationships between local authorities based on their collision profiles:
 
 ![](../../data_cache/vignettes/unsupervised_classification/dendrogram.html){width="100%" height="600px"}
 
-You need to select a suitable \`\`cut-point'' and cut the tree at an appropriate height to form a number of clusters.
+When zooming into this graph, four visually distinct branches become apparent, as represented by the colours green, red, cyan, and purple. Additionally there is a blue branch above these 4 branches that likely represents outliers or very distinct local authorities. Plotly automatically assigns these colours based on tree structure, but the four colours at the ends of the tree suggest that the data should form four main clusters.
 
-To aid visualisation of results, you should plot the cluster membership on a scatterplot of the first two principal components.
+In order to form these four clusters the tree was cut off at an appropriate height and plotted. For the purpose of visualisation and interpretability, principal components analysis (PCA) was carried out on the collision variables. By doing this I was able to extract and plot the first two principal components, which preserve as much variability as possible, rather than attempt to visualise all the variables at once. As a result, a 2-dimensional graph of the results was able to be plotted, making interpretation much easier:
 
 ![](../../data_cache/vignettes/unsupervised_classification/kscatter.html){width="100%" height="600px"}
+
+The graph shows the four generally well-defined clusters denoted by different colours. Cluster 3 appears to be the most spread out and the others tending to be more tight and compact. However, cluster 1, denoted as blue in the graph, might be a somewhat more ambiguous grouping, as it overlaps with neighbouring clusters much more than other do. FINAL CONCLUDING SENTENCE?
 
 ## kmeans clustering
 
@@ -90,7 +96,7 @@ For additional credit you should consider adding a further unsupervised classifi
 Instructions: You can use this document to record when, how and why you used GenAI to complete your assessment. It will help you create a record of AI use to submit alongside your references for AI-integrated and AI-assisted assignments. It may also be useful to help you discuss your AI use if you are required to do so in an academic conduct meeting.
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
-|----|----|----|----|----|----|
+|------------|------------|------------|------------|------------|------------|
 | E.g. 15/07/2025 | MS Copilot | To help create an organised essay structure | ‘Generate ideas for structuring an essay on...’ | \[insert link\] | introduction |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |

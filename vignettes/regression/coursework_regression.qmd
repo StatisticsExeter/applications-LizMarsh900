@@ -34,9 +34,25 @@ Where
 
 ## The Data
 
-Some initial exploratory data analysis shows us how the carbon emissions vary by age of property and by the number of rooms:
+//Some initial exploratory data analysis shows us how the carbon emissions vary by age of property and by the number of rooms://
+
+The following box plot shows how carbon emissions vary by age of property. Specifically it shows carbon emission shortfall, which is the difference between actual carbon emissions and the predicted
 
 ![](../../data_cache/vignettes/regression/boxplot_age.html){width="100%" height="600px"}
+
+Shortfall tends to refer to "The difference between an emissions target and the actual observed emissions"
+
+it may be emissions shortfall i.e., target emissions - actual emissions
+
+-   if positive the entity emitted more than the allowed target
+
+-   if negative the the entity emitted less than the target (outperformed)
+
+it coud be energy-efficiency shortfall
+
+-   what energy performance should be
+
+-   and what energy performance is
 
 ![](../../data_cache/vignettes/regression/boxplot_rooms.html){width="100%" height="600px"}
 
@@ -55,7 +71,7 @@ with open('../../data_cache/vignettes/regression/model_fit.txt') as f:
 
 ## The key insight
 
-We've been asked to rate local authority performance, so the most important result is a \`\`caterpillar plot'' of the random effects.
+We've been asked to rate local authority performance, so the most important result is a "caterpillar plot" of the random effects.
 
 ![](../../data_cache/vignettes/regression/caterpillar.html){width="100%" height="600px"}
 
@@ -68,7 +84,7 @@ For additional credit you might like to enhance the exploratory data analysis. Y
 Instructions: You can use this document to record when, how and why you used GenAI to complete your assessment. It will help you create a record of AI use to submit alongside your references for AI-integrated and AI-assisted assignments. It may also be useful to help you discuss your AI use if you are required to do so in an academic conduct meeting.
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
-|----|----|----|----|----|----|
+|------------|------------|------------|------------|------------|------------|
 | E.g. 15/07/2025 | MS Copilot | To help create an organised essay structure | ‘Generate ideas for structuring an essay on...’ | \[insert link\] | introduction |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
