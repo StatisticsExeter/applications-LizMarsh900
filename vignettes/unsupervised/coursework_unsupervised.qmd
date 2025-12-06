@@ -6,48 +6,21 @@ format:
     embed-resources: true
 ---
 
-## Your task
-
-This material is provided as context to the problem. You should rewrite it as you see fit. IN particular, you should demonstrate you understand why we are undertaking a cluster analysis, and what the various methods are telling us. In particular, you should explain how principal components helps us visualise the results of the clustering.
-
 ## The Problem
 
-Police recorded data in Great Britain is called "Stats19" and is available at <https://www.data.gov.uk/dataset/cb7ae6f0-4be6-4935-9277-47e5ce24a11f/road-accidents-safety-data>. These data are typically split into three linked tables:
+Road safety data is recorded by Police in Great Britain (<https://www.data.gov.uk/dataset/cb7ae6f0-4be6-4935-9277-47e5ce24a11f/road-accidents-safety-data>) and is split into three linked tables: accidents, vehicles, and casualties. We are interested in creating clusters of like authorities based on the kinds of collisions that occur in their area, specifically the number of the following types of collisions:
 
--   Accidents
+-   At a mini-roundabout
 
-    Each row represents a single reported accident. Key fields include:
+-   In the rain
 
-    -   Date and time
-    -   Location (e.g. latitude/longitude, local authority)
-    -   Road type and conditions
-    -   Weather and lighting
-    -   Number of vehicles and casualties
+-   In the dark
 
--   Vehicles
+-   Dry conditions
 
-    Each row represents a vehicle involved in an accident. Includes:
+-   In an urban setting
 
-    -   Vehicle type and age
-    -   Manoeuvre and direction
-    -   Driver age and sex
-
--   Casualties
-
-    Each row represents a person injured or killed. Includes:
-
-    -   Casualty type (pedestrian, cyclist, driver, etc.)
-    -   Severity (slight, serious, fatal)
-    -   Age, sex, and mode of transport
-
-These tables are linked via a unique accident index.
-
-We are interested in creating clusters of like authorities based on the kinds of collisions that occur in their area. You have been given a count of the number of collisions at Mini-roundabout, in the Rain, in the Dark, when the road is Dry, in an urban setting and where the most seriously injured casualty was reported as having a slight injury.
-
-Some previous cluster analysis work has been reported at:
-
--   [Cluster analysis](https://ijirt.org/publishedpaper/IJIRT175966_PAPER.pdf)
--   [More cluster analysis](https://www.researchgate.net/publication/357727987_Identification_of_Traffic_Accident_Patterns_via_Cluster_Analysis_and_Test_Scenario_Development_for_Autonomous_Vehicles/fulltext/61dcdc17034dda1b9eebd63d/Identification-of-Traffic-Accident-Patterns-via-Cluster-Analysis-and-Test-Scenario-Development-for-Autonomous-Vehicles.pdf)
+-   Most seriously injured casualty has a 'slight' injury
 
 ## The Data
 
@@ -55,45 +28,49 @@ The following figure shows a scatterplot matrix all the numerical variables in t
 
 ![](../../data_cache/vignettes/unsupervised_classification/scatterplot.html){width="100%" height="600px"}
 
-Upon visual inspection, the scatterplots do not appear to show many obvious associations between different types of collisions with a few exceptions. One such example is a negative correlation between the proportion of collisions in the rain versus dry weather, meaning that areas with a high proportion of collisions in the rain tend to have a lower proportion of dry collisions. This obviously makes sense, as collisions in wet weather cannot occur at the same time as collisions in dry weather. Another set of variables that might show a relationship is dry collisions and collisions resulting in slight injury. There appears to be a positive association between the two collision types, which could make sense logically, as dry collisions might result in less serious injuries.
+Upon visual inspection, the scatterplots do not appear to show many obvious associations between different types of collisions with a few exceptions. One such example is a negative correlation between the proportion of collisions in the rain versus dry weather, meaning that areas with a high proportion of collisions in the rain tend to have a lower proportion of dry collisions. This makes sense, as collisions in wet weather cannot occur at the same time as collisions in dry weather. Another set of variables that might show a relationship is dry collisions and collisions resulting in slight injury. There appears to be a positive association between the two collision types, which could make sense logically, as dry conditions might be linked to collision severity.
 
-Finally, and importantly, the total number of collisions is highly positively correlated with many of the collision subtypes, particularly slight injuries, urban locations, and dry conditions. Obviously this again is to be expected, as the subtypes make up proportions of the total collisions. However it does suggest that these three specific collision types make up most of the proportion of overall collisions and also that total crashes accounts for most of the variation between authorities.
+Finally, and importantly, the total number of collisions is highly positively correlated with many of the collision subtypes, particularly slight injuries, urban locations, and dry conditions. This again is to be expected, as the subtypes make up proportions of the total collisions. However it does suggest that these three specific collision types make up most of the proportion of overall collisions and also that total crashes accounts for most of the variation between authorities.
 
-## Hierarchical clustering 
+## Hierarchical clustering
 
-ADD IN DETAILS ABOUT WHAT EXACTLY HIERARCHICAL CLUSTERING DOES FOR YOU?
-
-The following dendrogram represents the hierarchical relationships between local authorities based on their collision profiles:
+The first analysis I carried out was hierarchical clustering analysis to help find patterns in the dataset. Specifically, I wanted to find clusters of similar local authorities based on the kinds of collisions that occur in their area. I used Ward's minimum variance method for the linkage method and created a dendrogram to visualise the clusters and the similarity or distance between them:
 
 ![](../../data_cache/vignettes/unsupervised_classification/dendrogram.html){width="100%" height="600px"}
 
-When zooming into this graph, four visually distinct branches become apparent, as represented by the colours green, red, cyan, and purple. Additionally there is a blue branch above these 4 branches that likely represents outliers or very distinct local authorities. Plotly automatically assigns these colours based on tree structure, but the four colours at the ends of the tree suggest that the data should form four main clusters.
+When zooming into this graph, four visually distinct branches become apparent, as represented by the colours green, red, cyan, and purple. There is also an overarching blue branch above these four branches. Plotly automatically assigns these colours based on tree structure, but it suggests that this dendrogram should be cut off at an appropriate height to form four distinct clusters.
 
-In order to form these four clusters the tree was cut off at an appropriate height and plotted. For the purpose of visualisation and interpretability, principal components analysis (PCA) was carried out on the collision variables. By doing this I was able to extract and plot the first two principal components, which preserve as much variability as possible, rather than attempt to visualise all the variables at once. As a result, a 2-dimensional graph of the results was able to be plotted, making interpretation much easier:
+Before plotting the results of this clustering solution, principal components analysis (PCA) was carried out on the collision variables for the purpose of visualisation and interpretability. By doing this I was able to extract and plot the first two principal components, which preserves as much variability as possible, rather than attempting to visualise all the variables at once. As a result, a 2D graph of the results was able to be plotted, making interpretation much easier:
 
 ![](../../data_cache/vignettes/unsupervised_classification/kscatter.html){width="100%" height="600px"}
 
-The graph shows the four generally well-defined clusters denoted by different colours. Cluster 3 appears to be the most spread out and the others tending to be more tight and compact. However, cluster 1, denoted as blue in the graph, might be a somewhat more ambiguous grouping, as it overlaps with neighbouring clusters much more than other do. FINAL CONCLUDING SENTENCE?
+The graph shows the four clusters denoted by different colours. Cluster 4 appears to be the most spread out and the others appear to be slightly more compact. Cluster 3, denoted as green in the graph, appears to be a more poorly defined cluster, as it overlaps with neighbouring clusters (particularly cluster 2 in blue) quite significantly. The mostly well-defined cluster appears to be cluster 1 in red, which is on the far right, and also one of the smallest groups.
 
 ## kmeans clustering
 
-The second task is to perform k-means clustering. You should select an appropriate number of clusters. First, you should look at the cluster centroids:
+Next I carried out a k-means clustering solution, which partitions the data based on which cluster has the nearest mean. Firstly we'll consider the cluster centroids:
 
 ![](../../data_cache/vignettes/unsupervised_classification/kcentroids1.html){width="100%" height="600px"}
 
+The graph shows the average total number of collisions for each cluster. Clusters 0 and 1 are relatively similar in their averages, while cluster 3 appears to display a smaller mean number of collisions. Cluster 2 however, seems to be the most distinct, with a significantly higher mean value than any other cluster. This overall seems to suggest that total collisions is one of the main drivers of cluster formation, which was expected from the results of the scatterplot matrix.
+
+The following graph represents the cluster centroids for all the collision sub-types:
+
 ![](../../data_cache/vignettes/unsupervised_classification/kcentroids2.html){width="100%" height="600px"}
 
-As before you should plot the cluster membership on a scatterplot of the first two principal components.
+This graph appears to show that certain collision sub-types exert more influence on clustering than others. For example, the average number of collisions at mini-roundabouts is very similar across all four clusters, suggesting it will have little impact on clustering. On the opposite end of the spectrum is the average number of collisions in an urban setting, which appears to have very different means across each cluster (cluster 2 is highest, while cluster 0 is lowest).
+
+Taking both of these graphs in mind then, cluster 2 seems to represent urban areas, with the highest number of total collisions, and proportion of collisions resulting in slight injuries. The other clusters seem to represent less urban local authorities, in particular cluster 0 which likely represents the most rural areas. Cluster 3 possibly represents areas most affected by wet weather, with a low total collisions average but a higher average for collisions in the rain, and a lower average for collisions in dry weather.
+
+As previously, I then plotted the cluster membership on a scatterplot of the first two principal components:
 
 ![](../../data_cache/vignettes/unsupervised_classification/kscatter.html){width="100%" height="600px"}
 
-## Additional credit
+The graph shows four generally well-defined clusters which share a lot of similarity with the hierarchical clustering solution. The four clusters have mostly relatively similar boundaries to the hierarchical solution, with slightly less agreement about a few data points from clusters 0, 1, and 2. Cluster 1 appears to be the most poorly defined in this solution, overlapping a lot with its neighbouring clusters.
 
-For additional credit you should consider adding a further unsupervised classification method. Alternatively, you could increase the number of variables used in the clustering.
+Overall, both methods of clustering present relatively similar clusters representing similar local authorities. The clusters tended to differ mostly in how urban rural they are, but some collision subtypes exerted an influence too.
 
 ## Record of AI use for MTHM503 unsupervised coursework
-
-Instructions: You can use this document to record when, how and why you used GenAI to complete your assessment. It will help you create a record of AI use to submit alongside your references for AI-integrated and AI-assisted assignments. It may also be useful to help you discuss your AI use if you are required to do so in an academic conduct meeting.
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
 |------------|------------|------------|------------|------------|------------|
