@@ -6,10 +6,6 @@ format:
     embed-resources: true
 ---
 
-## Your task
-
-This material is provided as context to the problem. You should rewrite it as you see fit.
-
 ## The Problem
 
 Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as:
@@ -32,14 +28,12 @@ In reducing the carbon footprint of UK housing, it is important to develop a str
 
 ## The Data
 
-A very simple preview of the data is given below:
-
 ```{python}
 #| echo: false
 import pandas as pd
 ```
 
-And a clumsy presentation of some group summary statistics:
+Below are the frequencies of the pre- and post-1930s houses, along with the group means, SDs, minimums, maximums, and quartiles for each variable:
 
 ```{python}
 #| echo: false
@@ -55,15 +49,17 @@ df = pd.read_csv('../../data_cache/vignettes/supervised_classification/grouped_s
 print(df.round(3).to_markdown(index=False))
 ```
 
-It is always useful to view a scatterplot of the data, marking the two known groups
+The frequencies of the pre- and post- 1930s houses are both relatively similar which is reassuring as it means the dataset is balanced, something which is important for the classifier later on. The summary statistics are as expected, with pre-1930s houses on average having lower energy efficiency, higher environmental impact (as denoted by a lower score: <https://assets.publishing.service.gov.uk/media/60acff14d3bf7f7380ffb662/Energy_Performance_of_Buildings_Certificates_-_glossary.pdf>), higher energy consumption, higher carbon emissions, and higher heating costs when compared to post-1930s builds. Older and newer houses do appear to have similar average costs for lighting and hot water, which could be due to that these systems are often updated (making them more efficient) in old buildings. Generally SDs are higher in the pre-1930s group, suggesting more variation than the post-1930s houses.
+
+The following a scatterplot matrix of all possible bivariate relationships between variables, coloured by group membership (pre- and post-1930s):
 
 ![](../../data_cache/vignettes/supervised_classification/scatterplot.html){width="100%" height="600px"}
 
-For more marks, you may wish to extend this EDA section slightly. We can extract the performance metrics from fitting such models:
+This scatterplot matrix shows several expected associations, such as a strong negative relationship between energy consumption and energy efficiency, and a positive relationship between energy efficiency and environmental impact score. More importantly for the task of classifiying, the scatterplots show substantial overlap between the two groups (denoted by blue and red) among all variables. Some variables, particularly carbon emissions and energy consumption, show slightly more separation but this is mostly because the pre-1930s homes constitute many of the extreme high values. The post-1930s homes cluster more tightly, which suggests less variability, something which was also shown by the SDs in the summary statistics.
 
 ## Fitting LDA and QDA classifiers
 
-The simplest classifiers we could apply are Linear and Quadratic Discriminant analysis.
+Firstly I carried out Linear Discriminant Analysis (LDA) as a dimension reduction technique, to find new axes that maximise separation between classes and minimise it within. The results of the LDA classifier are below:
 
 ```{python}
 #| echo: false
@@ -73,7 +69,9 @@ df.rename(columns={"Unnamed: 0": "Category"}, inplace=True)
 print(df.round(3).to_markdown(index=False))
 ```
 
-### Results from fitting a quadratic discriminant analysis
+The LDA classifier achieved an overall accuracy of 0.742, meaning it classified data points correctly 74% of the time. It was slightly better at distinguishing pre-30s homes (F1 = 0.769) compared to post-30s homes (F1 = 0.708) suggesting that older houses have more distinct energy usage and cost patterns. Overall, the results demonstrate that linear separation does exist in the data, but further non-linear models may capture class separation better.
+
+To investigate whether the class separation could be curved rather than linear, I conducted Quadratic Discriminant Analysis (QDA). A table of the results can be found below:
 
 ```{python}
 #| echo: false
@@ -83,26 +81,20 @@ df.rename(columns={"Unnamed: 0": "Category"}, inplace=True)
 print(df.round(3).to_markdown(index=False))
 ```
 
-You should comment on these results. You may wish to add an interpretation of the coefficients of these classifiers. Or there may be other metrics (confusion matrix) that you think should be presented.
+The QDA classifier achieved the exact same results as the LDA classifier, meaning it had an accuracy of 0.742 and was better at distinguishing pre-30s homes than post-30s homes. Given the results of this analysis are no better than the LDA results, it is likely that the class separation is linear and not curved. Therefore the QDA classifier is a worse classifier than the LDA classifier as it is more complex, but does not have any more accuracy.
 
 ## ROC curve (and AUC) for two simple classifiers
 
-We can of course examine the AUC for these classifiers.
+As a final assessment for the two classifiers, I plotted a ROC curve for both, and found the area under the curve (AUC):
 
 ![](../../data_cache/vignettes/supervised_classification/roc.html){width="100%" height="600px"}
 
-You should comment on the performance of the classifier.
-
-## Additional credit
-
-For additional credit you should consider extended the pipeline and trying out other classifiers.
+The ROC curve itself shows the trade-off between sensitivity and specificity at different thresholds, while the AUC summarises overall performance across all thresholds. A perfect AUC value is 1, while a completely random classifier would get a value of 0.5. The LDA classifier got an AUC of 0.81 which indicates good discriminatory power, suggesting that the energy metrics do contain patterns about the age of houses, despite strong overlap in scatterplots. (REWRITE IF ROC CURVE CHANGES)The QDA classifier also received an AUC of 0.81 which means that incorporating non-linear boundaries does not improve performance. Therefore, any underlying separation is linear in nature.
 
 ## Record of AI use for MTHM503 supervised coursework
 
-Instructions: You can use this document to record when, how and why you used GenAI to complete your assessment. It will help you create a record of AI use to submit alongside your references for AI-integrated and AI-assisted assignments. It may also be useful to help you discuss your AI use if you are required to do so in an academic conduct meeting.
-
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
-|----|----|----|----|----|----|
+|------------|------------|------------|------------|------------|------------|
 | E.g. 15/07/2025 | MS Copilot | To help create an organised essay structure | ‘Generate ideas for structuring an essay on...’ | \[insert link\] | introduction |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
