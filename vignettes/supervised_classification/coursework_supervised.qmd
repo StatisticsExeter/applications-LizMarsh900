@@ -8,23 +8,25 @@ format:
 
 ## The Problem
 
-Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as:
+Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO2 emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics.
 
--   Property energy efficiency: The core data is the energy efficiency rating, which ranges from A (most efficient) to G (least efficient).
--   CO2 emissions: The data includes information on the building's likely carbon dioxide emissions.
--   Energy costs: Potential costs for heating and lighting the property are provided.
--   Improvement recommendations: Each EPC lists cost-effective ways to improve the building's energy performance.
+Reducing the carbon footprint of UK housing is an increasingly important endeavor as global temperatures rise. In attempting to achieve this, it is important to develop a strategy that offers the right solutions to the right properties. It is widely believed that houses build before 1930 require very different approaches to houses built after that period. Therefore, this project will aim to determine whether it is possible to determine the age of a house based on several recorded energy metrics. These metrics are:
 
-In all, there are 93 variables available on a wide range of metrics. The full dataset is in the course database server at `10.121.4.250` in `energy.energy_certificates`
+-   `current_energy_efficiency`
 
-The data have been used for various published supervised classification exercises:
+-   `environment_impact_current`
 
--   ONS data science campus EPC data to predict energy efficiency ratings across Welsh properties. They applied models like XGBoost and found that features such as floor area, number of habitable rooms, and extension count were most predictive <https://datasciencecampus.ons.gov.uk/projects/using-machine-learning-to-predict-energy-efficiency/>
--   EPC anomaly detection (improve data quality) <https://www.iaarc.org/publications/fulltext/102_A_Comprehensive_Approach_for_Automated_Anomaly_Detection_and_Enhancement_of_EPC_Datasets_for_Decarbonization.pdf>
--   Identifying priorities for retrofit strategy <https://uwlpress.uwl.ac.uk/newvistas/article/id/299/>
--   EPC prediction <https://github.com/yourunclefrankie/Energy-efficiency-prediction>
+-   `energy_consumption_current`
 
-In reducing the carbon footprint of UK housing, it is important to develop a strategy that offers the right solutions to the right properties. It is widely believed that houses build before 1930 require very different approaches to houses built after that period. In this task, you are required to determine whether it is possible to determine the age of a house based on several recorded energy metrics. These are `current_energy_efficiency`, `environment_impact_current`, `energy_consumption_current`, `co2_emissions_current`, `lighting_cost_current`, `heating_cost_current`, `hot_water_cost_current`. You have data for all certificates issued in a single local authority area. This would help the local authority identify the right targets just using metrics rather than requiring a visit to the property to determine its age.
+-   `co2_emissions_current`
+
+-   `lighting_cost_current`
+
+-   `heating_cost_current`
+
+-   `hot_water_cost_current`
+
+This project will use data for all certificates issued in a single local authority area, with the aim of helping this local authority to identify the right targets by just using metrics. This means they will not be required to visit a the property to determine its age, saving on time and money.
 
 ## The Data
 
@@ -81,7 +83,9 @@ df.rename(columns={"Unnamed: 0": "Category"}, inplace=True)
 print(df.round(3).to_markdown(index=False))
 ```
 
-The QDA classifier achieved the exact same results as the LDA classifier, meaning it had an accuracy of 0.742 and was better at distinguishing pre-30s homes than post-30s homes. Given the results of this analysis are no better than the LDA results, it is likely that the class separation is linear and not curved. Therefore the QDA classifier is a worse classifier than the LDA classifier as it is more complex, but does not have any more accuracy.
+(POSSIBLY REWRITE IF RESULTS CHANGE)
+
+The QDA classifier achieved the exact same results as the LDA classifier, meaning it had an accuracy of 0.742 and was better at distinguishing pre-30s homes than post-30s homes. Given the results of this analysis are no better than the LDA results, it is likely that the class separation is linear and not curved. Therefore the QDA classifier is a worse classifier than the LDA classifier as it is more complex, but is not any more accurate.
 
 ## ROC curve (and AUC) for two simple classifiers
 
@@ -89,7 +93,7 @@ As a final assessment for the two classifiers, I plotted a ROC curve for both, a
 
 ![](../../data_cache/vignettes/supervised_classification/roc.html){width="100%" height="600px"}
 
-The ROC curve itself shows the trade-off between sensitivity and specificity at different thresholds, while the AUC summarises overall performance across all thresholds. A perfect AUC value is 1, while a completely random classifier would get a value of 0.5. The LDA classifier got an AUC of 0.81 which indicates good discriminatory power, suggesting that the energy metrics do contain patterns about the age of houses, despite strong overlap in scatterplots. (REWRITE IF ROC CURVE CHANGES)The QDA classifier also received an AUC of 0.81 which means that incorporating non-linear boundaries does not improve performance. Therefore, any underlying separation is linear in nature.
+The ROC curve itself shows the trade-off between sensitivity and specificity at different thresholds, while the AUC summarises overall performance across all thresholds. A perfect AUC value is 1, while a completely random classifier would get a value of 0.5. The LDA classifier got an AUC of 0.81 which indicates good discriminatory power, suggesting that the energy metrics do contain patterns about the age of houses, despite strong overlap in scatterplots. (REWRITE IF QDA ROC CURVE CHANGES)The QDA classifier also received an AUC of 0.81 which again shows that incorporating non-linear boundaries does not improve performance. Therefore, any underlying separation is linear in nature.
 
 ## Record of AI use for MTHM503 supervised coursework
 
