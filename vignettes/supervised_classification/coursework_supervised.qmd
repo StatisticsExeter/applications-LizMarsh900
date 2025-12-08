@@ -8,23 +8,17 @@ format:
 
 ## The Problem
 
-Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO2 emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics.
+Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO~2~ emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics (see glossary of terms at <https://epc.opendatacommunities.org/docs/guidance> for more details) .
 
 Reducing the carbon footprint of UK housing is an increasingly important endeavor as global temperatures rise. In attempting to achieve this, it is important to develop a strategy that offers the right solutions to the right properties. It is widely believed that houses build before 1930 require very different approaches to houses built after that period. Therefore, this project will aim to determine whether it is possible to determine the age of a house based on several recorded energy metrics. These metrics are:
 
--   `current_energy_efficiency`
-
--   `environment_impact_current`
-
--   `energy_consumption_current`
-
--   `co2_emissions_current`
-
--   `lighting_cost_current`
-
--   `heating_cost_current`
-
--   `hot_water_cost_current`
+-   `current_energy_efficiency`: energy required for heating and lighting (kWh/year) multiplied by fuel costs (£/m^2^);
+-   `environment_impact_current`: impact on the environment in terms of CO~2~ emissions; higher scores mean less impact on the environment (lower CO~2~ emissions)
+-   `energy_consumption_current`: total energy consumption in a year (kWh/m^2^)
+-   `co2_emissions_current`: CO~2~ emissions (tonnes/year)
+-   `lighting_cost_current`: estimated yearly energy costs (GBP)
+-   `heating_cost_current`: estimated yearly energy costs for heating (GBP)
+-   `hot_water_cost_current`: estimated yearly energy costs for hot water (GBP)
 
 This project will use data for all certificates issued in a single local authority area, with the aim of helping this local authority to identify the right targets by just using metrics. This means they will not be required to visit a the property to determine its age, saving on time and money.
 
@@ -98,7 +92,7 @@ The ROC curve itself shows the trade-off between sensitivity and specificity at 
 ## Record of AI use for MTHM503 supervised coursework
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
-|----|----|----|----|----|----|
+|------------|------------|------------|------------|------------|------------|
 | E.g. 15/07/2025 | MS Copilot | To help create an organised essay structure | ‘Generate ideas for structuring an essay on...’ | \[insert link\] | introduction |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
