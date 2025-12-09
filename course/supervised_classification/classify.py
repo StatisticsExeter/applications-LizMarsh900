@@ -1,4 +1,5 @@
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 import pandas as pd
 import joblib
 from course.utils import find_project_root
