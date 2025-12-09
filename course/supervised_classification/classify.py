@@ -27,7 +27,7 @@ def fit_qda():
     X_train_path = base_dir / 'data_cache' / 'energy_X_train.csv'
     y_train_path = base_dir / 'data_cache' / 'energy_y_train.csv'
     model_path = base_dir / 'data_cache' / 'models' / 'qda_model.joblib'
-    """Initialise a linear discriminant analysis classifierr called classifier which can be
+    """Initialise a quadratic discriminant analysis classifierr called classifier which can be
     passed to fit_classifier and fitted by classifer.fit()"""
-    classifier = LinearDiscriminantAnalysis()
+    classifier = QuadraticDiscriminantAnalysis()
     fit_classifier(X_train_path, y_train_path, model_path, classifier)
