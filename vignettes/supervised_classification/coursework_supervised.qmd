@@ -85,7 +85,7 @@ As a final assessment for the two classifiers, I plotted a ROC curve for both, a
 
 ![](../../data_cache/vignettes/supervised_classification/roc.html){width="100%" height="600px"}
 
-The ROC curve itself shows the trade-off between sensitivity and specificity at different thresholds, while the AUC summarises overall performance across all thresholds. A perfect AUC value is 1, while a completely random classifier would get a value of 0.5. The LDA classifier got an AUC of 0.81 which indicates good discriminatory power, suggesting that the energy metrics do contain patterns about the age of houses, despite strong overlap in scatterplots. The QDA classifier also received an AUC of 0.79 which as expected from the results shows it performs more poorly than the LDA classifier. This again suggests that incorporating non-linear boundaries is not useful in this case, and therefore, any underlying separation is linear in nature.
+The ROC curve itself shows the trade-off between sensitivity and specificity at different thresholds, while the AUC summarises overall performance across all thresholds. A perfect AUC value is 1, while a completely random classifier would get a value of 0.5. The LDA classifier got an AUC of 0.81 which indicates good discriminatory power, suggesting that the energy metrics do contain patterns about the age of houses, despite strong overlap in scatterplots. The QDA classifier received an AUC of 0.79 which as expected from the results shows it performs more poorly than the LDA classifier. This again suggests that incorporating non-linear boundaries is not useful in this case, and therefore, any underlying separation is linear in nature.
 
 ## Record of AI use for MTHM503 supervised coursework
 
