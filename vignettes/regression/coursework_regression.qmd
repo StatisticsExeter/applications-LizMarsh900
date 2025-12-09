@@ -9,14 +9,9 @@ format:
 
 ## The Problem
 
-Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as:
+Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO~2~ emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics (see glossary of terms at <https://epc.opendatacommunities.org/docs/guidance> for more details).
 
--   Property energy efficiency: The core data is the energy efficiency rating, which ranges from A (most efficient) to G (least efficient).
--   CO2 emissions: The data includes information on the building's likely carbon dioxide emissions.
--   Energy costs: Potential costs for heating and lighting the property are provided.
--   Improvement recommendations: Each EPC lists cost-effective ways to improve the building's energy performance.
-
-We have been asked by a local company to determine whether some local authorities are better than others in terms of reducing the carbon footprint of properties in their area. However, some authorities have older housing stock which is innately has a larger carbon footprint. Likewise, some have larger properties than others. The initial brief is to carry out an aggregate data analysis where the unit of analysis is a local authority. We have been asked to consider the average carbon footprint of a house in a given area conditional on being pre- or post-1930 and having between 1 and 10 heated rooms. This should let you fit a model which has fixed effects for the number of houses of pre-1930, post-1930 and 1, 2, 3, ..., 10 heated rooms
+A local company wants to determine whether some local authorities are better than others in terms of reducing the carbon footprint of properties in their area. However, some authorities have older housing stock which is innately has a larger carbon footprint. Likewise, some have larger properties than others. Therefore the initial brief is to carry out an aggregate data analysis where the unit of analysis is a local authority and where the average carbon footprint of a house in a given area conditional on being pre- or post-1930 and having between 1 and 10 heated rooms is considered. This will allow for a model with fixed effects for the number of houses of pre-1930, post-1930 and 1, 2, 3, ..., 10 heated rooms to be created:
 
 $$Y_{ji} = \beta_0 + \beta_1 x_{j}^{(\text{old})} + \sum_{r=1}^{10} \beta_r x_{j}^{(r)} + \gamma_j$$
 
@@ -30,17 +25,17 @@ Where
 
 ## The Data
 
-The following box plot shows how carbon emissions vary by age of property. Specifically it shows CO~2~ emission shortfall, which is the difference between actual current emissions and potential emissions if improvements in efficiency were made to the property:
+The following box plot shows how carbon emissions vary by age of property. Specifically it shows current CO~2~ emissions:
 
 ![](../../data_cache/vignettes/regression/boxplot_age.html){width="100%" height="600px"}
 
-The results seems to show that on average, old houses have a larger shortfall compared to newer houses (median = 6.77 vs. median = 4.66). This suggests that in general pre-1930s houses could reduce their emissions by a greater amount than post-1930s houses, which are closer to their potential highest efficiency. Additionally, there appears to be more spread in shortfall within the old house group (IQR = 5.76) than within the new house group (IQR = 3.46), which could be due to more consistency in modern building standards. The pre-1930s group also has more numerous and extreme outliers above the upper fence, possibly representing old houses which have not had any modern efficiency updates.
+The results seems to show that on average, old houses have greater carbon emissions compared to newer houses (median = 6.77 vs. median = 4.66). This suggests that in general pre-1930s houses could reduce their emissions by a greater amount than post-1930s houses, which are closer to their potential highest efficiency. Additionally, there appears to be more spread in carbon emissions within the old house group (IQR = 5.76) than within the new house group (IQR = 3.46), which could be due to more consistency in modern building standards. The pre-1930s group also has more numerous and extreme outliers above the upper fence, possibly representing old houses which have not had any modern efficiency updates.
 
 In addition to age, I also explored how carbon emission shortfall varies by the number of rooms in a property:
 
 ![](../../data_cache/vignettes/regression/boxplot_rooms.html){width="100%" height="600px"}
 
-With the exception of one room properties, average shortfall increases with each room added (two room median = 2.88, ten room median = 12.54), suggesting that larger houses have the potential to reduce their carbon footprint by a greater amount than smaller houses. Generally spread also increases with increasing number of rooms with the smallest spread being four rooms (IQR = 1.15) and the largest being ten rooms (IQR = 7.75).
+With the exception of one room properties, average CO~2~ emissions increase with each room added (two room median = 2.88, ten room median = 12.54), suggesting that larger houses have the potential to reduce their carbon footprint by a greater amount than smaller houses. Generally spread also increases with increasing number of rooms with the smallest spread being four rooms (IQR = 1.15) and the largest being ten rooms (IQR = 7.75).
 
 ## The model
 
@@ -55,9 +50,13 @@ with open('../../data_cache/vignettes/regression/model_fit.txt') as f:
     print(content)
 ```
 
-The fixed effects show that on average, houses in the recent group (post-1930s) have a smaller shortfall than the baseline group (pre-1930s) by 2.98 tonnes/year. This was as expected from the box plot but was additionally shown here to be a highly significant effect (CI: -3.07, -2.89). The fixed effects for the number of rooms was also found to be significant (CI: 1.04, 1.07) and showed that for every additional room, shortfall increased by 1.05. Again, this effect was predictable from the box plot.
+The fixed effects show that on average, houses in the recent group (post-1930s) have fewer carbon emissions than the baseline group (pre-1930s) by 2.98 tonnes/year. This was as expected from the box plot but was additionally shown here to be a significant effect (CI: -3.07, -2.89). The fixed effects for the number of rooms was also found to be significant (CI: 1.04, 1.07) and showed that for every additional room, carbon emissions increased increased by 1.05 tonnes/year. Again, this effect was predictable from the box plot.
 
-The random effects part of the model allows us to examine the average carbon footprint of a house in a given area, conditional on its age and number of rooms. The variance between local authorities was found to be 0.43 which would correspond to a SD of 0.66. Therefore the baseline level of shortfall in local authorities will generally be within about +/-0.66 of overall average which was 2.41 (intercept). Overall this suggests that local authorities do vary in terms of carbon shortfall, meaning that some authorities can reduce their CO~2~ emissions by a greater amount than others. This also suggests that some authorities are better than others at reducing the carbon footprint of their properties.
+The random effects part of the model allows us to examine the average carbon footprint of houses in a given area, conditional on its age and number of rooms. The variance between local authorities was found to be 0.43 which would correspond to a SD of about 0.66. Therefore the baseline level of shortfall in local authorities will generally be within about +/-0.66 of overall average which was 2.41 tonnes/year (intercept). Overall this suggests that local authorities do vary in terms of carbon emissions, meaning that some authorities can reduce their emissions by a greater amount than others. This also suggests that some authorities are better than others at reducing the carbon footprint of their properties.
+
+The final model using these results would be the following:
+
+$$Y_{ji} = 2.41 + 2.98 x_{j}^{(\text{old})} + \sum_{r=1}^{10} 1.05 x_{j}^{(r)} + \gamma_j$$
 
 ## The key insight
 
@@ -65,9 +64,9 @@ Since we also want to see each local authority's performance, a "caterpillar plo
 
 ![](../../data_cache/vignettes/regression/caterpillar.html){width="100%" height="600px"}
 
-The plot shows each authority's estimated random intercept (baseline level of carbon shortfall) in blue with 95% confidence intervals denoted by the grey bands and a vertical red line at the average. X-axis values show how far each authority's random intercept differ from the average at zero. Therefore if an authority has a negative value, it corresponds to a baseline shortfall lower than the average. Generally, the CIs cross the zero line for most local authorities, suggesting only at the very extremes are authorities actually statistically significantly different from the mean. Additionally, as the results of the model suggested, the vast majority of local authorities lie between -0.66 and 0.66.
+The plot shows each authority's estimated random intercept (baseline level of carbon shortfall) in blue with 95% confidence intervals denoted by the grey bands and a vertical red line at the average. X-axis values show how far each authority's random intercept differ from the average at zero. Therefore if an authority has a negative value, it corresponds to a baseline carbon emission lower than the average. Generally, the CIs cross the zero line for most local authorities, suggesting only at the very extremes are authorities actually statistically significantly different from the mean. Additionally, as the results of the model suggested, the vast majority of local authorities lie between -0.66 and 0.66.
 
-This plot can be used to assess the each local authority's performance, by reading off the effect size value. For example if an authority had a value of -0.89, its baseline shortfall is 0.89 units lower than average. This means its properties are generally more efficient the difference between actual carbon emissions and potential carbon emissions is smaller. Therefore, they have less progress to make in terms of reducing their carbon emissions.
+This plot can be used to assess the each local authority's performance, by reading off the effect size value. For example if an authority had a value of -0.89, its baseline carbon emissions are 0.89 tonnes/year lower than average. This means its properties are generally more efficient and have less progress to make in terms of reducing their carbon emissions.
 
 ## Record of AI use for MTHM503 Regression coursework
 
