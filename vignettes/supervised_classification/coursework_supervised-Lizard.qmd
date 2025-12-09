@@ -8,7 +8,7 @@ format:
 
 ## The Problem
 
-Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO~2~ emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics (see glossary of terms at <https://epc.opendatacommunities.org/docs/guidance> for more details) .
+Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO~2~ emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics (see glossary of terms at <https://epc.opendatacommunities.org/docs/guidance> for more details).
 
 Reducing the carbon footprint of UK housing is an increasingly important endeavor as global temperatures rise. In attempting to achieve this, it is important to develop a strategy that offers the right solutions to the right properties. It is widely believed that houses build before 1930 require very different approaches to houses built after that period. Therefore, this project will aim to determine whether it is possible to determine the age of a house based on several recorded energy metrics. These metrics are:
 
@@ -53,7 +53,7 @@ The following a scatterplot matrix of all possible bivariate relationships betwe
 
 This scatterplot matrix shows several expected associations, such as a strong negative relationship between energy consumption and energy efficiency, and a positive relationship between energy efficiency and environmental impact score. More importantly for the task of classifiying, the scatterplots show substantial overlap between the two groups (denoted by blue and red) among all variables. Some variables, particularly carbon emissions and energy consumption, show slightly more separation but this is mostly because the pre-1930s homes constitute many of the extreme high values. The post-1930s homes cluster more tightly, which suggests less variability, something which was also shown by the SDs in the summary statistics.
 
-## Fitting LDA and QDA classifiers
+## Fitting LDA and QDA Classifiers
 
 Firstly I carried out Linear Discriminant Analysis (LDA) as a dimension reduction technique, to find new axes that maximise separation between classes and minimise it within. The results of the LDA classifier are below:
 
@@ -77,22 +77,20 @@ df.rename(columns={"Unnamed: 0": "Category"}, inplace=True)
 print(df.round(3).to_markdown(index=False))
 ```
 
-(POSSIBLY REWRITE IF RESULTS CHANGE)
+The QDA classifier achieved an overall accuracy of 0.621 and was slightly better at distinguishing post-1930s homes (F1 = 0.681) then pre-1930s homes (F1 = 0.534). The classifier performed worse than the LDA classifier in every domain, meaning that the LDA classifier is the better model. This also suggests that the underlying separation between older and newer homes is linear in nature.
 
-The QDA classifier achieved the exact same results as the LDA classifier, meaning it had an accuracy of 0.742 and was better at distinguishing pre-30s homes than post-30s homes. Given the results of this analysis are no better than the LDA results, it is likely that the class separation is linear and not curved. Therefore the QDA classifier is a worse classifier than the LDA classifier as it is more complex, but is not any more accurate.
-
-## ROC curve (and AUC) for two simple classifiers
+## ROC Curve (and AUC) for Two Simple Classifiers
 
 As a final assessment for the two classifiers, I plotted a ROC curve for both, and found the area under the curve (AUC):
 
 ![](../../data_cache/vignettes/supervised_classification/roc.html){width="100%" height="600px"}
 
-The ROC curve itself shows the trade-off between sensitivity and specificity at different thresholds, while the AUC summarises overall performance across all thresholds. A perfect AUC value is 1, while a completely random classifier would get a value of 0.5. The LDA classifier got an AUC of 0.81 which indicates good discriminatory power, suggesting that the energy metrics do contain patterns about the age of houses, despite strong overlap in scatterplots. (REWRITE IF QDA ROC CURVE CHANGES)The QDA classifier also received an AUC of 0.81 which again shows that incorporating non-linear boundaries does not improve performance. Therefore, any underlying separation is linear in nature.
+The ROC curve itself shows the trade-off between sensitivity and specificity at different thresholds, while the AUC summarises overall performance across all thresholds. A perfect AUC value is 1, while a completely random classifier would get a value of 0.5. The LDA classifier got an AUC of 0.81 which indicates good discriminatory power, suggesting that the energy metrics do contain patterns about the age of houses, despite strong overlap in scatterplots. The QDA classifier received an AUC of 0.79 which as expected from the results shows it performs more poorly than the LDA classifier. This again suggests that incorporating non-linear boundaries is not useful in this case, and therefore, any underlying separation is linear in nature.
 
 ## Record of AI use for MTHM503 supervised coursework
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
-|------------|------------|------------|------------|------------|------------|
+|----|----|----|----|----|----|
 | E.g. 15/07/2025 | MS Copilot | To help create an organised essay structure | ‘Generate ideas for structuring an essay on...’ | \[insert link\] | introduction |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
