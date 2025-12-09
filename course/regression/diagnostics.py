@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as stats
 
+
 def _save_residual_plots(results, outdir):
     """Generate residual diagnostic plots for a MixedLM model."""
     outdir.mkdir(parents=True, exist_ok=True)
@@ -44,24 +45,4 @@ def _save_residual_plots(results, outdir):
     plt.title("Scale–Location Plot")
     plt.tight_layout()
     plt.savefig(outdir / "scale_location.png")
-    plt.close()
-
-    # -----------------------
-    # 4. Residuals vs Random Effects (optional)
-    # -----------------------
-    # for mixed models this highlights group-level patterns
-    re = results.random_effects
-    re_df = pd.DataFrame(re).T.rename(columns={0: "RE_Intercept"})
-    # align with original df rows:
-    df_groups = results.model.data.frame["local_authority_code"].map(
-        lambda g: re_df.loc[g, "RE_Intercept"]
-    )
-
-    plt.figure(figsize=(6, 4))
-    plt.scatter(df_groups, resid, alpha=0.5)
-    plt.xlabel("Random Effect Intercept")
-    plt.ylabel("Residuals")
-    plt.title("Residuals vs Random Effects")
-    plt.tight_layout()
-    plt.savefig(outdir / "residuals_vs_random_effects.png")
     plt.close()
