@@ -31,7 +31,7 @@ The following box plot shows how carbon emissions vary by age of property. Speci
 
 The results seems to show that on average, old houses have greater carbon emissions compared to newer houses (median = 6.77 vs. median = 4.66). This suggests that in general pre-1930s houses could reduce their emissions by a greater amount than post-1930s houses, which are closer to their potential highest efficiency. Additionally, there appears to be more spread in carbon emissions within the old house group (IQR = 5.76) than within the new house group (IQR = 3.46), which could be due to more consistency in modern building standards. The pre-1930s group also has more numerous and extreme outliers above the upper fence, possibly representing old houses which have not had any modern efficiency updates.
 
-In addition to age, I also explored how carbon emission shortfall varies by the number of rooms in a property:
+In addition to age, I also explored how carbon emissions vary by the number of rooms in a property:
 
 ![](../../data_cache/vignettes/regression/boxplot_rooms.html){width="100%" height="600px"}
 
