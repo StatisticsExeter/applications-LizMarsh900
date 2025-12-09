@@ -42,7 +42,7 @@ When zooming into this graph, four visually distinct branches become apparent, a
 
 Before plotting the results of this clustering solution, principal components analysis (PCA) was carried out on the collision variables for the purpose of visualisation and interpretability. By doing this I was able to extract and plot the first two principal components, which preserves as much variability as possible, rather than attempting to visualise all the variables at once. As a result, a 2D graph of the results was able to be plotted, making interpretation much easier:
 
-![](../../data_cache/vignettes/unsupervised_classification/kscatter.html){width="100%" height="600px"}
+![](../../data_cache/vignettes/unsupervised_classification/hscatter.html){width="100%" height="600px"}
 
 The graph shows the four clusters denoted by different colours. Cluster 4 appears to be the most spread out and the others appear to be slightly more compact. Cluster 3, denoted as green in the graph, appears to be a more poorly defined cluster, as it overlaps with neighbouring clusters (particularly cluster 2 in blue) quite significantly. The mostly well-defined cluster appears to be cluster 1 in red, which is on the far right, and also one of the smallest groups.
 
