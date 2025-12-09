@@ -53,7 +53,7 @@ The following a scatterplot matrix of all possible bivariate relationships betwe
 
 This scatterplot matrix shows several expected associations, such as a strong negative relationship between energy consumption and energy efficiency, and a positive relationship between energy efficiency and environmental impact score. More importantly for the task of classifiying, the scatterplots show substantial overlap between the two groups (denoted by blue and red) among all variables. Some variables, particularly carbon emissions and energy consumption, show slightly more separation but this is mostly because the pre-1930s homes constitute many of the extreme high values. The post-1930s homes cluster more tightly, which suggests less variability, something which was also shown by the SDs in the summary statistics.
 
-## Fitting LDA and QDA classifiers
+## Fitting LDA and QDA Classifiers
 
 Firstly I carried out Linear Discriminant Analysis (LDA) as a dimension reduction technique, to find new axes that maximise separation between classes and minimise it within. The results of the LDA classifier are below:
 
@@ -79,7 +79,7 @@ print(df.round(3).to_markdown(index=False))
 
 The QDA classifier achieved an overall accuracy of 0.621 and was slightly better at distinguishing post-1930s homes (F1 = 0.681) then pre-1930s homes (F1 = 0.534). The classifier performed worse than the LDA classifier in every domain, meaning that the LDA classifier is the better model. This also suggests that the underlying separation between older and newer homes is linear in nature.
 
-## ROC curve (and AUC) for two simple classifiers
+## ROC Curve (and AUC) for Two Simple Classifiers
 
 As a final assessment for the two classifiers, I plotted a ROC curve for both, and found the area under the curve (AUC):
 

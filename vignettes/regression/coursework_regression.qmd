@@ -37,7 +37,7 @@ In addition to age, I also explored how carbon emissions vary by the number of r
 
 With the exception of one room properties, average CO~2~ emissions increase with each room added (two room median = 2.88, ten room median = 12.54), suggesting that larger houses have the potential to reduce their carbon footprint by a greater amount than smaller houses. Generally spread also increases with increasing number of rooms with the smallest spread being four rooms (IQR = 1.15) and the largest being ten rooms (IQR = 7.75).
 
-## The model
+## The Model
 
 The next step was fitting a mixed linear model on the data and producing a summary of the fixed effects which can be found below:
 
@@ -58,7 +58,7 @@ The final model using these results would be the following:
 
 $$Y_{ji} = 2.41 + 2.98 x_{j}^{(\text{old})} + \sum_{r=1}^{10} 1.05 x_{j}^{(r)} + \gamma_j$$
 
-## The key insight
+## The Key Insight
 
 Since we also want to see each local authority's performance, a "caterpillar plot" of the random effects was created:
 
