@@ -73,7 +73,7 @@ Overall, both methods of clustering present relatively similar clusters represen
 ## Record of AI use for MTHM503 unsupervised coursework
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
-|------------|------------|------------|------------|------------|------------|
+|----|----|----|----|----|----|
 | E.g. 15/07/2025 | MS Copilot | To help create an organised essay structure | ‘Generate ideas for structuring an essay on...’ | \[insert link\] | introduction |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
