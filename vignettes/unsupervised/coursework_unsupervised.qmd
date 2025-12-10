@@ -8,7 +8,7 @@ format:
 
 ## The Problem
 
-Road safety data is recorded by Police in Great Britain (<https://www.data.gov.uk/dataset/cb7ae6f0-4be6-4935-9277-47e5ce24a11f/road-accidents-safety-data>) and is split into three linked tables: accidents, vehicles, and casualties. We are interested in creating clusters of like authorities based on the kinds of collisions that occur in their area, specifically the number of the following types of collisions:
+Road safety data is recorded by Police in Great Britain (<https://www.data.gov.uk/dataset/cb7ae6f0-4be6-4935-9277-47e5ce24a11f/road-accidents-safety-data>) and is split into three linked tables: accidents, vehicles, and casualties. This data can be used to examine the types of collisions that occur most commonly in certain areas, so that local authorities can understand what exactly their steps can be to reduce collisions. Therefore, the current project will aim to use this data to create clusters of similar authorities based on the kinds of collisions that occur in their area, specifically the number of the following types of collisions:
 
 -   At a mini-roundabout
 
@@ -24,17 +24,17 @@ Road safety data is recorded by Police in Great Britain (<https://www.data.gov.u
 
 ## The Data
 
-The following figure shows a scatterplot matrix all the numerical variables in the dataset plotted against one another, to allow us to visualise all bivariate relationships. The proportion of each subtype of collision was used, rather the actual number of collisions, and the variables were rescaled.
+The first step I took was carrying out some intial exploratory data analysis. The following figure shows a scatterplot matrix all the numerical variables in the dataset plotted against one another, to allow us to visualise all bivariate relationships. The proportion of each subtype of collision was used, rather the actual number of collisions, and the variables were rescaled.
 
 ![](../../data_cache/vignettes/unsupervised_classification/scatterplot.html){width="100%" height="600px"}
 
 Upon visual inspection, the scatterplots do not appear to show many obvious associations between different types of collisions with a few exceptions. One such example is a negative correlation between the proportion of collisions in the rain versus dry weather, meaning that areas with a high proportion of collisions in the rain tend to have a lower proportion of dry collisions. This makes sense, as collisions in wet weather cannot occur at the same time as collisions in dry weather. Another set of variables that might show a relationship is dry collisions and collisions resulting in slight injury. There appears to be a positive association between the two collision types, which could make sense logically, as dry conditions might be linked to collision severity.
 
-Finally, and importantly, the total number of collisions is highly positively correlated with many of the collision subtypes, particularly slight injuries, urban locations, and dry conditions. This again is to be expected, as the subtypes make up proportions of the total collisions. However it does suggest that these three specific collision types make up most of the proportion of overall collisions and also that total crashes accounts for most of the variation between authorities.
+Finally, and importantly, the total number of collisions is highly positively correlated with many of the collision subtypes, particularly slight injuries, urban locations, and dry conditions. This again is obviously to be expected, as the subtypes make up proportions of the total collisions. However it does suggest that these three specific collision types make up most of the proportion of overall collisions and also that total crashes accounts for most of the variation between authorities.
 
 ## Hierarchical clustering
 
-The first analysis I carried out was hierarchical clustering analysis to help find patterns in the dataset. Specifically, I wanted to find clusters of similar local authorities based on the kinds of collisions that occur in their area. I used Ward's minimum variance method for the linkage method and created a dendrogram to visualise the clusters and the similarity or distance between them:
+The next step was conducting a hierarchical clustering analysis to help find patterns in the dataset. Specifically, I wanted to find clusters of similar local authorities based on the kinds of collisions that occur in their area. I used Ward's minimum variance method for the linkage method and created a dendrogram to visualise the clusters and the similarity or distance between them:
 
 ![](../../data_cache/vignettes/unsupervised_classification/dendrogram.html){width="100%" height="600px"}
 
@@ -48,7 +48,7 @@ The graph shows the four clusters denoted by different colours. Cluster 4 appear
 
 ## kmeans clustering
 
-Next I carried out a k-means clustering solution, which partitions the data based on which cluster has the nearest mean. Firstly we'll consider the cluster centroids:
+Finally, I carried out a k-means clustering solution, which partitions the data based on which cluster has the nearest mean. Firstly we'll consider the cluster centroids for the number of total collisions:
 
 ![](../../data_cache/vignettes/unsupervised_classification/kcentroids1.html){width="100%" height="600px"}
 
@@ -68,13 +68,13 @@ As previously, I then plotted the cluster membership on a scatterplot of the fir
 
 The graph shows four generally well-defined clusters which share a lot of similarity with the hierarchical clustering solution. The four clusters have mostly relatively similar boundaries to the hierarchical solution, with slightly less agreement about a few data points from clusters 0, 1, and 2. Cluster 1 appears to be the most poorly defined in this solution, overlapping a lot with its neighbouring clusters.
 
-Overall, both methods of clustering present relatively similar clusters representing similar local authorities. The clusters tended to differ mostly in how urban rural they are, but some collision subtypes exerted an influence too.
+Overall, both methods of clustering present relatively similar clusters representing similar local authorities. The clusters tended to differ mostly in the total number of collisions but some subtypes, particularly urban collisions, exerted an influence too.
 
-## Record of AI use for MTHM503 unsupervised coursework
+## Record of AI use
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
 |------------|------------|------------|------------|------------|------------|
-| E.g. 15/07/2025 | MS Copilot | To help create an organised essay structure | ‘Generate ideas for structuring an essay on...’ | \[insert link\] | introduction |
+|  |  |  |  |  |  |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |

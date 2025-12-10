@@ -9,9 +9,9 @@ format:
 
 ## The Problem
 
-Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO~2~ emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics (see glossary of terms at <https://epc.opendatacommunities.org/docs/guidance> for more details).
+Data on [Energy Certificates](https://epc.opendatacommunities.org/) of building in England and Wales are provided by the Department for Levelling Up, Housing & Communities. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO~2~ emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics (see glossary of terms at <https://epc.opendatacommunities.org/docs/guidance> for more details).
 
-A local company wants to determine whether some local authorities are better than others in terms of reducing the carbon footprint of properties in their area. However, some authorities have older housing stock which is innately has a larger carbon footprint. Likewise, some have larger properties than others. Therefore the initial brief is to carry out an aggregate data analysis where the unit of analysis is a local authority and where the average carbon footprint of a house in a given area conditional on being pre- or post-1930 and having between 1 and 10 heated rooms is considered. This will allow for a model with fixed effects for the number of houses of pre-1930, post-1930 and 1, 2, 3, ..., 10 heated rooms to be created:
+This project aims to determine whether some local authorities are better than others in terms of reducing the carbon footprint of properties in their area. However, the age and size of house in each area must be considered due to older and larger houses having a larger carbon footprint. Therefore I will be performing aggregate data analysis where the unit of analysis is a local authority. The average carbon footprint of a house in a given area will be considered, but will be conditional on whether it was build before or after 1930, and the number of heated rooms. I will then be able to create a model with fixed effects for the number of houses built pre-1930, post-1930 and number of heated rooms:
 
 $$Y_{ji} = \beta_0 + \beta_1 x_{j}^{(\text{old})} + \sum_{r=1}^{10} \beta_r x_{j}^{(r)} + \gamma_j$$
 
@@ -54,10 +54,6 @@ The fixed effects show that on average, houses in the recent group (post-1930s) 
 
 The random effects part of the model allows us to examine the average carbon footprint of houses in a given area, conditional on its age and number of rooms. The variance between local authorities was found to be 0.43 which would correspond to a SD of about 0.66. Therefore the baseline level of shortfall in local authorities will generally be within about +/-0.66 of overall average which was 2.41 tonnes/year (intercept). Overall this suggests that local authorities do vary in terms of carbon emissions, meaning that some authorities can reduce their emissions by a greater amount than others. This also suggests that some authorities are better than others at reducing the carbon footprint of their properties.
 
-The final model using these results would be the following:
-
-$$Y_{ji} = 2.41 + 2.98 x_{j}^{(\text{old})} + \sum_{r=1}^{10} 1.05 x_{j}^{(r)} + \gamma_j$$
-
 ## The Key Insight
 
 Since we also want to see each local authority's performance, a "caterpillar plot" of the random effects was created:
@@ -66,27 +62,29 @@ Since we also want to see each local authority's performance, a "caterpillar plo
 
 The plot shows each authority's estimated random intercept (baseline level of carbon shortfall) in blue with 95% confidence intervals denoted by the grey bands and a vertical red line at the average. X-axis values show how far each authority's random intercept differ from the average at zero. Therefore if an authority has a negative value, it corresponds to a baseline carbon emission lower than the average. Generally, the CIs cross the zero line for most local authorities, suggesting only at the very extremes are authorities actually statistically significantly different from the mean. Additionally, as the results of the model suggested, the vast majority of local authorities lie between -0.66 and 0.66.
 
-This plot can be used to assess the each local authority's performance, by reading off the effect size value. For example if an authority had a value of -0.89, its baseline carbon emissions are 0.89 tonnes/year lower than average. This means its properties are generally more efficient and have less progress to make in terms of reducing their carbon emissions.
+This plot can be used to assess the each local authority's performance, by reading off the effect size value. For example, if an authority had a value of -0.89, its baseline carbon emissions are 0.89 tonnes/year lower than average. This number can also be plugged into the model as the $\gamma_j$ value to give the average carbon emissions for a specific house type, which using the fixed effects results from the previous section, would be the following:
 
-## Additional Credit - Residual Diagnostic Plots
+$$Y_{ji} = 2.41 + 2.98 x_{j}^{(\text{old})} + \sum_{r=1}^{10} 1.05 x_{j}^{(r)} + \gamma_j$$
 
-To extend this work slightly further, I decided to created regression diagnostic plots for the model, which can be found below:
+## Additional Credit - Regression Diagnostic Plots
+
+To extend this work slightly further, I decided to create regression diagnostic plots for the model, which required installing `matplotlib`. The plots can be found below:
 
 ![](../../data_cache/models/diagnostics/residuals_vs_fitted.png){width="100%" height="600px"} ![](../../data_cache/models/diagnostics/qq_plot.png){width="100%" height="600px"} ![](../../data_cache/models/diagnostics/scale_location.png){width="100%" height="600px"}
 
-The first graph is a scatterplot of residuals against fitted values. It is used to assess assumptions of linearity and homoscedasticity (i.e., constant variance) of residuals. An ideal plot would show the data points spread equally around the red horizontal line. In this case, the residuals do not follow this and form a distinct U-shape, indicating that there is a violation of linearity. Additionally the residuals to not appear to vary constantly suggesting a violation of homoscedasticity.
+The first graph is a scatterplot of residuals against fitted values. It is used to assess assumptions of linearity and homoscedasticity (i.e., constant variance) of residuals. An ideal plot would show the data points spread equally around the red horizontal line. In this case, the residuals do not follow this and form a distinct U-shape, indicating that there is a violation of linearity between the predictors and outcome. Additionally the residuals to not appear to vary constantly suggesting a violation of homoscedasticity.
 
 The second graph plots quantiles of theoretical residuals against standardised residuals and is used to assess the normality of residuals assumption. The data points falling roughly along the diagonal red line would indicate that the residuals are normally distributed. Unfortunately this plot again suggests that the assumption is violated as data points on the ends deviate from the red line quite majorly.
 
-The final plot is again used to assess the homoscedasticity assumption by plotting the square root of teh absolute standardised residuals against the fitted values. As suggested by the residuals vs fitted plot, there appears to a be a violation of constant variance as the data points do not fall along a straight horizontal line, but instead form an almost W-shape.
+The final plot is again used to assess the homoscedasticity assumption by plotting the square root of the absolute standardised residuals against the fitted values. As suggested by the residuals vs fitted plot, there appears to be heteroscedasticity, as the data points do not fall along a straight horizontal line, but instead form an almost W-shape.
 
-Overall, the plots indicate that there are multiple violations of the assumptions of the linear model. This suggests that some variables may require transformation in order to fit a more appropriate model.
+Overall, the plots indicate that there are multiple violations of the assumptions of the linear model. This suggests that in future, the model should be modified significantly. This could include transforming the outcome variable (CO~2~ emissions) using a logarithm, using a non-linear model such as a GAMM, or adding in non-linear terms.
 
 ## Record of AI Use
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
 |------------|------------|------------|------------|------------|------------|
-| 09/12/2025 | ChatGPT | To help extend the regression pipeline by including diagnostics |  |  | Additional Credit |
+| 09/12/2025 | ChatGPT | To help extend the regression pipeline by including diagnostics | "How would I extend this pipeline to include regression diagnostic plots?: \[copied contents of fit_model.py\]" |  | Additional Credit |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |

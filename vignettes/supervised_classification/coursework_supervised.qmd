@@ -8,9 +8,9 @@ format:
 
 ## The Problem
 
-Data on [Energy Certificates](https://epc.opendatacommunities.org/) were downloaded in March 2025. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO~2~ emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics (see glossary of terms at <https://epc.opendatacommunities.org/docs/guidance> for more details) .
+Data on [Energy Certificates](https://epc.opendatacommunities.org/) of building in England and Wales are provided by the Department for Levelling Up, Housing & Communities. These certificates are a non-random sample of UK housing, and contain information such as property energy efficiency, CO~2~ emissions, energy costs, and improvement recommendations. In total, there are 93 variables available on a wide range of metrics (see glossary of terms at <https://epc.opendatacommunities.org/docs/guidance> for more details) .
 
-Reducing the carbon footprint of UK housing is an increasingly important endeavor as global temperatures rise. In attempting to achieve this, it is important to develop a strategy that offers the right solutions to the right properties. It is widely believed that houses build before 1930 require very different approaches to houses built after that period. Therefore, this project will aim to determine whether it is possible to determine the age of a house based on several recorded energy metrics. These metrics are:
+Reducing the carbon footprint of UK housing is an increasingly important endeavor as global temperatures rise. In attempting to achieve this, it's important to develop a strategy that is tailored to property types, because older and newer houses require different approches. Therefore, this project will aim to establish whether it's possible to determine the age of a house based on several recorded energy metrics. These metrics are:
 
 -   `current_energy_efficiency`: energy required for heating and lighting (kWh/year) multiplied by fuel costs (£/m^2^);
 -   `environment_impact_current`: impact on the environment in terms of CO~2~ emissions; higher scores mean less impact on the environment (lower CO~2~ emissions)
@@ -77,7 +77,7 @@ df.rename(columns={"Unnamed: 0": "Category"}, inplace=True)
 print(df.round(3).to_markdown(index=False))
 ```
 
-The QDA classifier achieved an overall accuracy of 0.621 and was slightly better at distinguishing post-1930s homes (F1 = 0.681) then pre-1930s homes (F1 = 0.534). The classifier performed worse than the LDA classifier in every domain, meaning that the LDA classifier is the better model. This also suggests that the underlying separation between older and newer homes is linear in nature.
+The QDA classifier achieved an overall accuracy of 0.621 and was slightly better at distinguishing post-1930s homes (F1 = 0.681) then pre-1930s homes (F1 = 0.534). However, the classifier performed worse than the LDA classifier in every domain (F1 scores, accuracy), showing that the LDA classifier is the better model. This also suggests that the underlying separation between older and newer homes is linear in nature.
 
 ## ROC curve (and AUC) for two simple classifiers
 
@@ -87,11 +87,13 @@ As a final assessment for the two classifiers, I plotted a ROC curve for both, a
 
 The ROC curve itself shows the trade-off between sensitivity and specificity at different thresholds, while the AUC summarises overall performance across all thresholds. A perfect AUC value is 1, while a completely random classifier would get a value of 0.5. The LDA classifier got an AUC of 0.81 which indicates good discriminatory power, suggesting that the energy metrics do contain patterns about the age of houses, despite strong overlap in scatterplots. The QDA classifier received an AUC of 0.79 which as expected from the results shows it performs more poorly than the LDA classifier. This again suggests that incorporating non-linear boundaries is not useful in this case, and therefore, any underlying separation is linear in nature.
 
-## Record of AI use for MTHM503 supervised coursework
+Overall, using the LDA classifier it would be possible for a local authority to determine the age of a house with a 74% accuracy rate, without visiting it. This will help inform the targets set for reducing carbon footprint.
+
+## Record of AI use
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
 |------------|------------|------------|------------|------------|------------|
-| E.g. 15/07/2025 | MS Copilot | To help create an organised essay structure | ‘Generate ideas for structuring an essay on...’ | \[insert link\] | introduction |
+|  |  |  |  |  |  |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
