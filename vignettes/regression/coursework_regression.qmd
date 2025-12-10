@@ -83,7 +83,7 @@ Overall, the plots indicate that there are multiple violations of the assumption
 ## Record of AI Use
 
 | **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
-|------------|------------|------------|------------|------------|------------|
+|----|----|----|----|----|----|
 | 09/12/2025 | ChatGPT | To help extend the regression pipeline by including diagnostics | "How would I extend this pipeline to include regression diagnostic plots?: \[copied contents of fit_model.py\]" |  | Additional Credit |
 |  |  |  |  |  |  |
 |  |  |  |  |  |  |
