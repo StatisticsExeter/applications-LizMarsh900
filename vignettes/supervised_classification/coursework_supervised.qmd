@@ -91,14 +91,4 @@ Overall, using the LDA classifier it would be possible for a local authority to 
 
 ## Record of AI use
 
-| **Date** | **AI tool used** | **Purpose** | **Prompt** | **Hyperlink to output (where possible)** | **Section of work used for** |
-|------------|------------|------------|------------|------------|------------|
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
+No AI was used in the making of this coursework
